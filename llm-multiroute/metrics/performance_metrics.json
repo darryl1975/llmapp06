@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "timestamp": "2026-03-02T03:27:58.453970+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "latency_seconds": 1.7555
+    },
+    {
+      "timestamp": "2026-03-02T03:30:56.732260+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "latency_seconds": 1.4691
+    }
+  ],
+  "summary": {
+    "p50_latency": 1.6123,
+    "p95_latency": 1.9989,
+    "avg_latency": 1.6123,
+    "total_requests": 2
+  }
+}

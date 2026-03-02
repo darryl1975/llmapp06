@@ -1,0 +1,25 @@
+{
+  "records": [
+    {
+      "timestamp": "2026-03-02T03:27:58.454661+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "input_tokens": 74,
+      "output_tokens": 33,
+      "total_tokens": 107
+    },
+    {
+      "timestamp": "2026-03-02T03:30:56.735414+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "input_tokens": 79,
+      "output_tokens": 40,
+      "total_tokens": 119
+    }
+  ],
+  "summary": {
+    "total_input_tokens": 153,
+    "total_output_tokens": 73,
+    "total_requests": 2
+  }
+}

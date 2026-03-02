@@ -1,5 +1,6 @@
 import json
 import re
+import time
 from typing import Optional
 
 import httpx
@@ -9,6 +10,7 @@ from app.dto.classification_response import ClassificationResponse
 from app.dto.intent_response import IntentResponse
 from app.dto.sentiment_response import SentimentResponse
 from app.dto.summary_response import SummaryResponse
+from app.monitoring import metrics_store
 from app.router.model_router import ModelRouter, TaskType, model_router
 
 
@@ -24,10 +26,12 @@ class AIService:
         self.api_key = settings.OLLAMA_API_KEY
         self.router = router or model_router
 
-    def _chat(self, prompt: str, model: str) -> str:
+    def _chat(self, prompt: str, model: str, task_type: str = "unknown") -> str:
         headers = {}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
+
+        start = time.monotonic()
         response = self.http_client.post(
             f"{self.base_url}/api/chat",
             headers=headers,
@@ -39,7 +43,21 @@ class AIService:
             },
         )
         response.raise_for_status()
-        return response.json()["message"]["content"]
+        latency = time.monotonic() - start
+
+        body = response.json()
+
+        # Record latency
+        metrics_store.record_latency(task_type, model, latency)
+
+        # Record token usage (Ollama returns prompt_eval_count / eval_count)
+        input_tokens = body.get("prompt_eval_count", 0)
+        output_tokens = body.get("eval_count", 0)
+        metrics_store.record_token_usage(
+            task_type, model, input_tokens, output_tokens, input_tokens + output_tokens
+        )
+
+        return body["message"]["content"]
 
     def classify_text(self, text: str) -> ClassificationResponse:
         model = self.router.get_model(TaskType.CLASSIFY)
@@ -50,7 +68,7 @@ class AIService:
             "Return JSON in this exact format:\n"
             '{"labels": ["label1", "label2"], "primaryCategory": "category", "confidence": 0.9}'
         )
-        response = self._chat(prompt, model)
+        response = self._chat(prompt, model, task_type="classify")
         return self._parse_json(response, ClassificationResponse)
 
     def analyze_sentiment(self, text: str) -> SentimentResponse:
@@ -63,7 +81,7 @@ class AIService:
             '{"overallSentiment": "positive", "sentimentScore": 0.8, '
             '"emotions": ["joy", "excitement"], "confidence": 0.9}'
         )
-        response = self._chat(prompt, model)
+        response = self._chat(prompt, model, task_type="sentiment")
         return self._parse_json(response, SentimentResponse)
 
     def summarize_text(self, text: str) -> SummaryResponse:
@@ -75,7 +93,7 @@ class AIService:
             "Return JSON in this exact format:\n"
             '{"summary": "your summary here", "keyPoints": ["point1", "point2", "point3"], "wordCount": 25}'
         )
-        response = self._chat(prompt, model)
+        response = self._chat(prompt, model, task_type="summarize")
         return self._parse_json(response, SummaryResponse)
 
     def detect_intent(self, text: str) -> IntentResponse:
@@ -93,7 +111,7 @@ class AIService:
             '{"primaryIntent": "main_intent", "secondaryIntents": ["intent1", "intent2"], '
             '"intentCategory": "question", "confidence": 0.9}'
         )
-        response = self._chat(prompt, model)
+        response = self._chat(prompt, model, task_type="intent")
         return self._parse_json(response, IntentResponse)
 
     @staticmethod
