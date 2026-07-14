@@ -1,5 +1,4 @@
 import json
-import os
 import statistics
 import threading
 from datetime import datetime, timezone
