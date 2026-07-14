@@ -35,12 +35,42 @@
       "task_type": "classify",
       "model": "gemma3:4b",
       "latency_seconds": 1.6421
+    },
+    {
+      "timestamp": "2026-07-14T07:51:48.363497+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "latency_seconds": 1.9966
+    },
+    {
+      "timestamp": "2026-07-14T08:00:08.527866+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "latency_seconds": 1.8126
+    },
+    {
+      "timestamp": "2026-07-14T08:00:25.335221+00:00",
+      "task_type": "summarize",
+      "model": "ministral-3:8b",
+      "latency_seconds": 2.1728
+    },
+    {
+      "timestamp": "2026-07-14T08:00:40.238647+00:00",
+      "task_type": "sentiment",
+      "model": "ministral-3:3b",
+      "latency_seconds": 2.1147
+    },
+    {
+      "timestamp": "2026-07-14T08:00:55.190117+00:00",
+      "task_type": "intent",
+      "model": "gemma3:12b",
+      "latency_seconds": 2.7891
     }
   ],
   "summary": {
-    "p50_latency": 1.4985,
-    "p95_latency": 1.8292,
-    "avg_latency": 1.5066,
-    "total_requests": 6
+    "p50_latency": 1.7555,
+    "p95_latency": 3.0356,
+    "avg_latency": 1.8114,
+    "total_requests": 11
   }
 }

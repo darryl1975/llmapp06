@@ -4,6 +4,7 @@ import time
 from typing import Optional
 
 import httpx
+from langfuse import get_client, observe
 
 from app.config import settings
 from app.dto.classification_response import ClassificationResponse
@@ -12,6 +13,8 @@ from app.dto.sentiment_response import SentimentResponse
 from app.dto.summary_response import SummaryResponse
 from app.monitoring import metrics_store
 from app.router.model_router import ModelRouter, TaskType, model_router
+
+langfuse = get_client()
 
 
 class AIService:
@@ -26,7 +29,15 @@ class AIService:
         self.api_key = settings.OLLAMA_API_KEY
         self.router = router or model_router
 
+    @observe(as_type="generation")
     def _chat(self, prompt: str, model: str, task_type: str = "unknown") -> str:
+        langfuse.update_current_generation(
+            name="ollama-chat",
+            model=model,
+            input=[{"role": "user", "content": prompt}],
+            metadata={"temperature": self.temperature, "task_type": task_type},
+        )
+
         headers = {}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -46,18 +57,21 @@ class AIService:
         latency = time.monotonic() - start
 
         body = response.json()
-
-        # Record latency
-        metrics_store.record_latency(task_type, model, latency)
-
-        # Record token usage (Ollama returns prompt_eval_count / eval_count)
         input_tokens = body.get("prompt_eval_count", 0)
         output_tokens = body.get("eval_count", 0)
+        content = body["message"]["content"]
+
+        langfuse.update_current_generation(
+            output=content,
+            usage_details={"input": input_tokens, "output": output_tokens},
+        )
+
+        metrics_store.record_latency(task_type, model, latency)
         metrics_store.record_token_usage(
             task_type, model, input_tokens, output_tokens, input_tokens + output_tokens
         )
 
-        return body["message"]["content"]
+        return content
 
     def classify_text(self, text: str) -> ClassificationResponse:
         model = self.router.get_model(TaskType.CLASSIFY)

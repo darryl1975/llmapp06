@@ -13,6 +13,9 @@ services:
       - OLLAMA_MODEL_SUMMARIZE=${OLLAMA_MODEL_SUMMARIZE:-ministral-3:8b}
       - OLLAMA_MODEL_INTENT=${OLLAMA_MODEL_INTENT:-gemma3:12b}
       - SERVER_PORT=8080
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+      - LANGFUSE_HOST=${LANGFUSE_HOST:-https://cloud.langfuse.com}
     networks:
       - llm-network
 

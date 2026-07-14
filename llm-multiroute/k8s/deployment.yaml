@@ -119,4 +119,4 @@ metadata:
   namespace: llm-multiroute-backend
 type: Opaque
 data:
-  OLLAMA_API_KEY: "YWMyYzFlNmQzMmY1NGZiYWE1ZjhkMjY5ZmM0N2JmZTAudDBIbWNGRHlQdjlyTHM3SzE3RFJaOExr"  # Base64 encoded API key - replace with: echo -n 'your-api-key' | base64
+  OLLAMA_API_KEY: ZDFjMzgwNDBhNjE2NGQwOWFkOTFjYzQ2Njg2ZmVkYTYuR3VMaXhmQ3ZDQUJiWkZ2dVlVS0ozZzct  # Base64 encoded API key - replace with: echo -n 'your-api-key' | base64

@@ -47,11 +47,51 @@
       "input_tokens": 81,
       "output_tokens": 42,
       "total_tokens": 123
+    },
+    {
+      "timestamp": "2026-07-14T07:51:48.366275+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "input_tokens": 124,
+      "output_tokens": 51,
+      "total_tokens": 175
+    },
+    {
+      "timestamp": "2026-07-14T08:00:08.531211+00:00",
+      "task_type": "classify",
+      "model": "gemma3:4b",
+      "input_tokens": 124,
+      "output_tokens": 43,
+      "total_tokens": 167
+    },
+    {
+      "timestamp": "2026-07-14T08:00:25.337261+00:00",
+      "task_type": "summarize",
+      "model": "ministral-3:8b",
+      "input_tokens": 120,
+      "output_tokens": 103,
+      "total_tokens": 223
+    },
+    {
+      "timestamp": "2026-07-14T08:00:40.240102+00:00",
+      "task_type": "sentiment",
+      "model": "ministral-3:3b",
+      "input_tokens": 127,
+      "output_tokens": 60,
+      "total_tokens": 187
+    },
+    {
+      "timestamp": "2026-07-14T08:00:55.191975+00:00",
+      "task_type": "intent",
+      "model": "gemma3:12b",
+      "input_tokens": 182,
+      "output_tokens": 46,
+      "total_tokens": 228
     }
   ],
   "summary": {
-    "total_input_tokens": 538,
-    "total_output_tokens": 239,
-    "total_requests": 6
+    "total_input_tokens": 1215,
+    "total_output_tokens": 542,
+    "total_requests": 11
   }
 }
