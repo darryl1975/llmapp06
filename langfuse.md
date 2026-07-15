@@ -126,17 +126,17 @@ Once requests are flowing, open the Langfuse dashboard:
 - Filter by model name (`gemma3:4b`, `ministral-3:3b`, etc.) to compare performance
 
 ### Metrics captured automatically
-| Metric | Where in Langfuse |
-|--------|------------------|
-| End-to-end latency | Trace → duration |
-| Input token count | Generation → Usage → Input |
-| Output token count | Generation → Usage → Output |
-| Estimated cost | Generation → Cost (after model prices configured) |
-| Model used | Generation → Model column |
-| Task type | Generation → Metadata → task_type |
-| Temperature | Generation → Metadata → temperature |
-| Prompt content | Generation → Input |
-| Response content | Generation → Output |
+| Metric             | Where in Langfuse                                 |
+|--------------------|---------------------------------------------------|
+| End-to-end latency | Trace → duration                                  |
+| Input token count  | Generation → Usage → Input                        |
+| Output token count | Generation → Usage → Output                       |
+| Estimated cost     | Generation → Cost (after model prices configured) |
+| Model used         | Generation → Model column                         |
+| Task type          | Generation → Metadata → task_type                 |
+| Temperature        | Generation → Metadata → temperature               |
+| Prompt content     | Generation → Input                                |
+| Response content   | Generation → Output                               |
 
 ---
 
@@ -148,12 +148,12 @@ Langfuse does not know Ollama model pricing by default. To see `$/request`:
 2. Click **+ Add model**
 3. For each model, fill in the name exactly as it appears in your `OLLAMA_MODEL_*` env vars:
 
-| Model name | Input price per 1M tokens | Output price per 1M tokens |
-|------------|--------------------------|---------------------------|
-| `gemma3:4b` | your cost | your cost |
-| `ministral-3:3b` | your cost | your cost |
-| `ministral-3:8b` | your cost | your cost |
-| `gemma3:12b` | your cost | your cost |
+| Model name       | Input price per 1M tokens | Output price per 1M tokens |
+|------------------|---------------------------|----------------------------|
+| `gemma3:4b`      | your cost                 | your cost                  |
+| `ministral-3:3b` | your cost                 | your cost                  |
+| `ministral-3:8b` | your cost                 | your cost                  |
+| `gemma3:12b`     | your cost                 | your cost                  |
 
 ---
 
