@@ -111,6 +111,7 @@ data:
   OLLAMA_MODEL_SENTIMENT: "ministral-3:3b"
   OLLAMA_MODEL_SUMMARIZE: "ministral-3:8b"
   OLLAMA_MODEL_INTENT: "gemma3:12b"
+  LANGFUSE_HOST: "https://cloud.langfuse.com"
 ---
 apiVersion: v1
 kind: Secret
@@ -120,3 +121,5 @@ metadata:
 type: Opaque
 data:
   OLLAMA_API_KEY: ZDFjMzgwNDBhNjE2NGQwOWFkOTFjYzQ2Njg2ZmVkYTYuR3VMaXhmQ3ZDQUJiWkZ2dVlVS0ozZzct  # Base64 encoded API key - replace with: echo -n 'your-api-key' | base64
+  LANGFUSE_PUBLIC_KEY: cGstbGYtZWFiMDBjMmUtYTQ4ZC00YTg4LTg3MzctYTdlZTI3YzNjMzc=
+  LANGFUSE_SECRET_KEY: c2stbGYtZGMxYzRjNDAtYTI3Mi00ZjQwLTlhZGItNGZjNGJhOTcyZGI1
